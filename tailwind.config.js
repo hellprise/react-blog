@@ -10,7 +10,16 @@ module.exports = {
         center: true,
       },
       colors: {
-        green: "#5CB85C",
+        "blog-green": "#5CB85C",
+      },
+      boxShadow: {
+        banner: "inset 0 8px 8px -8px rgb(0 0 0 / 30%), inset 0 -8px 8px -8px rgb(0 0 0 / 30%)",
+      },
+      dropShadow: {
+        logo: "0px 1px 3px rgb(0 0 0 / 30%)",
+      },
+      fontSize: {
+        logo: "3.5rem",
       },
     },
   },

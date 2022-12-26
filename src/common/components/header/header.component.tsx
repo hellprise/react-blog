@@ -17,9 +17,11 @@ export const Header: FC<HeaderProps> = ({}) => {
 
   return (
     <header>
-      <nav className="container">
+      <nav className="container font-titillium">
         <section className="flex items-center justify-between px-2 py-4">
-          <Link to="/" className="font-titillium text-2xl font-bold text-green">
+          <Link
+            to="/"
+            className="cursor-pointer text-2xl font-bold text-blog-green transition-colors hover:text-green-600">
             Conduit
           </Link>
 
