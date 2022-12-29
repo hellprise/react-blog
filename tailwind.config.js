@@ -11,6 +11,7 @@ module.exports = {
       },
       colors: {
         "blog-green": "#5CB85C",
+        text: "#373a3c",
       },
       boxShadow: {
         banner: "inset 0 8px 8px -8px rgb(0 0 0 / 30%), inset 0 -8px 8px -8px rgb(0 0 0 / 30%)",
