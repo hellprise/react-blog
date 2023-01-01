@@ -1,7 +1,7 @@
 import { FC } from "react";
 
 import { Banner, Header } from "./common";
-import { Article } from "./modules";
+import { Articles } from "./modules";
 
 interface AppProps {}
 
@@ -10,7 +10,7 @@ export const App: FC<AppProps> = ({}) => {
     <>
       <Header />
       <Banner />
-      <Article />
+      <Articles />
     </>
   );
 };
