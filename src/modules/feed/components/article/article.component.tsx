@@ -47,7 +47,6 @@ export const Article: FC<IArticleProps> = ({
             <div className="flex items-center space-x-1">
               <img src="/calendar.svg" width={20} height={20} alt="calendar icon" />
 
-              {/* <span className="text-black/30">{getDate(createdAt)}</span> */}
               <span className="text-black/30">
                 {DateTime.fromISO(createdAt).toLocaleString(DateTime.DATE_FULL)}
               </span>
