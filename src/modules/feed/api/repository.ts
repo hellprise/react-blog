@@ -4,6 +4,7 @@ import { axiosBaseQuery } from "../../../core/axios-base-query";
 import { FEED_PAGE_SIZE } from "../../../utils";
 
 import { GlobalFeedIn } from "./dto/global-feed.in";
+import { TagsIn } from "./dto/tags.in";
 
 interface GlobalFeedParams {
   page: number;
@@ -16,12 +17,11 @@ export const feedApi = createApi({
     getGlobalFeed: builder.query<GlobalFeedIn, GlobalFeedParams>({
       query: ({ page }) => ({
         url: "/articles",
-        method: "get",
         params: { limit: FEED_PAGE_SIZE, offset: page * FEED_PAGE_SIZE },
       }),
     }),
-    getTags: builder.query({
-      query: () => ({ url: "/tags", method: "get" }),
+    getTags: builder.query<TagsIn, any>({
+      query: () => ({ url: "/tags" }),
     }),
   }),
 });
