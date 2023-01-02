@@ -7,4 +7,103 @@
     font-family: "Source Sans Pro", sans-serif;
     @apply text-text;
   }
+
+  .hero-text {
+    animation: hero-text 2s ease-in-out;
+  }
+
+  .banner-desc:after {
+    content: "";
+    width: 0px;
+    height: 1px;
+    display: block;
+    background: white;
+    animation: banner-desc 2s ease-in-out;
+  }
+
+  .dots-animation {
+    position: relative;
+    width: 8px;
+    height: 8px;
+    border-radius: 5px;
+    background-color: #000000;
+    color: #000000;
+    animation: dot-flashing 1s infinite linear alternate;
+    animation-delay: 0.5s;
+  }
+  .dots-animation::before,
+  .dots-animation::after {
+    content: "";
+    display: inline-block;
+    position: absolute;
+    top: 0;
+  }
+  .dots-animation::before {
+    left: -15px;
+    width: 8px;
+    height: 8px;
+    border-radius: 5px;
+    background-color: #000000;
+    color: #000000;
+    animation: dot-flashing 1s infinite alternate;
+    animation-delay: 0s;
+  }
+  .dots-animation::after {
+    left: 15px;
+    width: 8px;
+    height: 8px;
+    border-radius: 5px;
+    background-color: #000000;
+    color: #000000;
+    animation: dot-flashing 1s infinite alternate;
+    animation-delay: 1s;
+  }
+
+  .error {
+    animation: glow 0.5s infinite alternate;
+  }
+
+  @keyframes banner-desc {
+    0% {
+      width: 0px;
+    }
+
+    100% {
+      width: 100%;
+    }
+  }
+
+  @keyframes hero-text {
+    0% {
+      transform: rotate(0deg);
+    }
+
+    25% {
+      transform: rotate(-10deg);
+    }
+
+    50% {
+      transform: rotate(-5deg);
+    }
+
+    100% {
+      transform: rotate(-12deg);
+    }
+  }
+
+  @keyframes dot-flashing {
+    0% {
+      background-color: #000000;
+    }
+    50%,
+    100% {
+      background-color: rgba(182, 172, 226, 0.2);
+    }
+  }
+
+  @keyframes glow {
+    to {
+      text-shadow: 0 0 4px red;
+    }
+  }
 }

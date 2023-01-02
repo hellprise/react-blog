@@ -31,16 +31,17 @@ export const Articles: FC<IArticleProps> = ({}) => {
 
   if (isLoading || isFetching) {
     return (
-      <div className="text-center font-titillium text-xl font-semibold text-black">
-        <span>Loading...</span>
+      <div className="flex items-end justify-center space-x-6 font-titillium">
+        <span className="text-3xl font-semibold text-black">Loading</span>
+        <div className="dots-animation mb-1" />
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="text-center font-titillium text-xl font-semibold text-red-500">
-        <span>Something went wrong...</span>
+      <div className="text-center font-titillium text-3xl font-semibold text-red-500">
+        <span className="error">Something went wrong</span>
       </div>
     );
   }
@@ -74,7 +75,7 @@ export const Articles: FC<IArticleProps> = ({}) => {
 
         <div className="mt-4 flex max-w-xs flex-wrap gap-2">
           {tagsData?.tags.map((tag: string, index: Key) => (
-            <Tag key={tag} link="/" color="dark">
+            <Tag key={tag} link={tag} color="DARK">
               {tag}
             </Tag>
           ))}

@@ -82,7 +82,7 @@ export const Article: FC<IArticleProps> = ({
 
         <div className="flex space-x-2">
           {tagList.map((tag: string) => (
-            <Tag key={tag} link="/">
+            <Tag key={tag} link={tag}>
               {tag}
             </Tag>
           ))}
