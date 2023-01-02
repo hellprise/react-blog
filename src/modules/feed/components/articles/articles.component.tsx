@@ -1,18 +1,35 @@
-import { FC, Key } from "react";
+import { FC, Key, useState } from "react";
+import ReactPaginate from "react-paginate";
 
 import { Tag } from "../../../../common";
+
 import { ArticlesToggle } from "../articles-toggle";
-import { Article } from "../article";
+import { ArticlesList } from "./articles-list.component";
 
 import { useGetGlobalFeedQuery, useGetTagsQuery } from "../../api/repository";
+import { FEED_PAGE_SIZE } from "../../../../utils";
+import { useSearchParams } from "react-router-dom";
+import { serializeSearchParams } from "../../../../utils/router";
 
 interface IArticleProps {}
 
 export const Articles: FC<IArticleProps> = ({}) => {
-  const { data, error, isLoading } = useGetGlobalFeedQuery("");
-  const { data: tagsData, error: tagsError, isLoading: agsIsLoading } = useGetTagsQuery("");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [page, setPage] = useState<number>(
+    searchParams.get("page") ? Number(searchParams.get("page")) : 0,
+  );
 
-  if (isLoading) {
+  const handlePageClick = ({ selected }: { selected: number }) => {
+    setPage(selected);
+    setSearchParams(serializeSearchParams({ page: String(selected) }));
+  };
+
+  console.log("page", page);
+
+  const { data, error, isLoading, isFetching } = useGetGlobalFeedQuery({ page });
+  const { data: tagsData, error: tagsError, isLoading: tagsIsLoading } = useGetTagsQuery("");
+
+  if (isLoading || isFetching) {
     return (
       <div className="text-center font-titillium text-xl font-semibold text-black">
         <span>Loading...</span>
@@ -35,11 +52,21 @@ export const Articles: FC<IArticleProps> = ({}) => {
       <div className="w-8/12">
         <ArticlesToggle />
 
-        <div className="space-y-5">
-          {data?.articles.map((article: any) => (
-            <Article key={article.slug} {...article} />
-          ))}
-        </div>
+        <section className="pb-10">
+          <ArticlesList articles={data?.articles || []} />
+
+          <ReactPaginate
+            previousLabel={null}
+            nextLabel={null}
+            className="mt-7 flex items-center space-x-1 text-lg"
+            pageClassName="flex items-center justify-center px-4 py-2 text-blog-green rounded-md transition-all border border-transparent hover:border-text"
+            activeClassName="font-semibold bg-blog-green text-text"
+            pageCount={(data?.articlesCount || 0) / FEED_PAGE_SIZE}
+            pageRangeDisplayed={(data?.articlesCount || 0) / FEED_PAGE_SIZE}
+            onPageChange={handlePageClick}
+            forcePage={page}
+          />
+        </section>
       </div>
 
       <section>
