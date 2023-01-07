@@ -8,6 +8,7 @@ import { TagsIn } from "./dto/tags.in";
 
 interface GlobalFeedParams {
   page: number;
+  tag: string | null;
 }
 
 export const feedApi = createApi({
@@ -15,9 +16,9 @@ export const feedApi = createApi({
   baseQuery: axiosBaseQuery({ baseUrl: "https://api.realworld.io/api" }),
   endpoints: (builder) => ({
     getGlobalFeed: builder.query<GlobalFeedIn, GlobalFeedParams>({
-      query: ({ page }) => ({
+      query: ({ page, tag }) => ({
         url: "/articles",
-        params: { limit: FEED_PAGE_SIZE, offset: page * FEED_PAGE_SIZE },
+        params: { limit: FEED_PAGE_SIZE, offset: page * FEED_PAGE_SIZE, tag },
       }),
     }),
     getTags: builder.query<TagsIn, any>({

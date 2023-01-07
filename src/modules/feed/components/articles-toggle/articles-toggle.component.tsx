@@ -1,15 +1,18 @@
 import clsx from "clsx";
 import { FC } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useSearchParams } from "react-router-dom";
 
 interface IArticlesToggleProps {}
 
 export const ArticlesToggle: FC<IArticlesToggleProps> = () => {
-  const navLinkClasses = ({ isActive }: { isActive: boolean }) =>
-    clsx("transition-all py-2 px-4 text-blog-green duration-[350ms]", {
-      "border-b-blog-green font-semibold border-b-2": isActive,
-      "": !isActive,
-    });
+  const [searchParams] = useSearchParams();
+
+  const tag = searchParams.get("tag");
+
+  const navLinkClasses = clsx("transition-all py-2 px-4 text-blog-green duration-[350ms]", {
+    "border-b-blog-green font-semibold border-b-2": !tag,
+    "": tag,
+  });
 
   return (
     <ul className="flex h-[36px] items-center space-x-5">
@@ -18,16 +21,13 @@ export const ArticlesToggle: FC<IArticlesToggleProps> = () => {
           Global Feed
         </NavLink>
       </li>
-      <li>
-        <NavLink className={navLinkClasses} to={"/123"}>
-          testObj
-        </NavLink>
-      </li>
-      <li>
-        <NavLink className={navLinkClasses} to={"/321"}>
-          Cat
-        </NavLink>
-      </li>
+      {tag && (
+        <li>
+          <span className="border-b-2 border-b-blog-green py-2 px-4 font-semibold text-blog-green transition-all duration-[350ms]">
+            {tag}
+          </span>
+        </li>
+      )}
     </ul>
   );
 };

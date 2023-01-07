@@ -28,7 +28,10 @@ export const Articles: FC<IArticleProps> = () => {
 
   console.log("page", page);
 
-  const { data, error, isLoading, isFetching } = useGetGlobalFeedQuery({ page });
+  const { data, error, isLoading, isFetching } = useGetGlobalFeedQuery({
+    page,
+    tag: searchParams.get("tag"),
+  });
 
   if (isLoading || isFetching) {
     return <LoadingComponent text="Loading articles" />;
