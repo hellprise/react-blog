@@ -1,4 +1,4 @@
-import React, { Key } from "react";
+import { Key } from "react";
 
 import { Tag } from "../../../../common";
 
@@ -21,7 +21,7 @@ export const TagsCloud = () => {
   return (
     <div className="mt-4 flex max-w-xs flex-wrap gap-2">
       {data?.tags.map((tag: string, index: Key) => (
-        <Tag key={tag} link={tag} color="DARK">
+        <Tag key={index} link={tag} color="dark">
           {tag}
         </Tag>
       ))}
