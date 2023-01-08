@@ -1,11 +1,11 @@
-import { FC, useState } from "react";
+import { FC } from "react";
 import ReactPaginate from "react-paginate";
 import { useSearchParams } from "react-router-dom";
 
 import { ArticlesToggle } from "../articles-toggle";
 import { ArticlesList } from "./articles-list.component";
 
-import { useGetGlobalFeedQuery } from "../../api/repository";
+import { FeedData } from "../../api/repository";
 
 import { FEED_PAGE_SIZE } from "../../../../utils";
 import { serializeSearchParams } from "../../../../utils/router";
@@ -13,25 +13,20 @@ import { TagsCloud } from "../tags-cloud/tags-cloud.component";
 import { LoadingComponent } from "../loading/loading.component";
 import { ErrorComponent } from "../error/error.component";
 
-interface IArticleProps {}
+interface IArticleProps {
+  isLoading?: boolean;
+  isFetching?: boolean;
+  error?: unknown;
+  data?: FeedData;
+}
 
-export const Articles: FC<IArticleProps> = () => {
+export const Articles: FC<IArticleProps> = ({ data, error, isFetching, isLoading }) => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [page, setPage] = useState<number>(
-    searchParams.get("page") ? Number(searchParams.get("page")) : 0,
-  );
+  const page = searchParams.get("page") ? Number(searchParams.get("page")) : 0;
 
   const handlePageClick = ({ selected }: { selected: number }) => {
-    setPage(selected);
     setSearchParams(serializeSearchParams({ page: String(selected) }));
   };
-
-  console.log("page", page);
-
-  const { data, error, isLoading, isFetching } = useGetGlobalFeedQuery({
-    page,
-    tag: searchParams.get("tag"),
-  });
 
   if (isLoading || isFetching) {
     return <LoadingComponent text="Loading articles" />;
