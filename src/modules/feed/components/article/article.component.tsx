@@ -26,6 +26,8 @@ export const Article: FC<IArticleProps> = ({
     }
   };
 
+  console.log("author", author);
+
   return (
     <article className="border-t border-t-black/10 py-6">
       <div className="mb-5 flex items-end justify-between">
@@ -40,7 +42,8 @@ export const Article: FC<IArticleProps> = ({
           />
 
           <div className="ml-2 flex flex-col">
-            <Link to={"/"} className="font-semibold text-blog-green">
+            <Link to={`/user/${author.username}`} className="font-semibold text-blog-green">
+              {/* <Link to={`/@${author.username}`} className="font-semibold text-blog-green"> */}
               {author.username}
             </Link>
 

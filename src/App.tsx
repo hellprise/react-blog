@@ -1,16 +1,19 @@
 import { FC } from "react";
+import { Route, Routes } from "react-router-dom";
 
-import { Banner, Header } from "./common";
-import { Articles } from "./modules";
+import { Header } from "./common";
+import { ProfilePage, GlobalFeedPage } from "./modules";
 
 interface AppProps {}
 
-export const App: FC<AppProps> = ({}) => {
+export const App: FC<AppProps> = () => {
   return (
     <>
       <Header />
-      <Banner />
-      <Articles />
+      <Routes>
+        <Route path="/" element={<GlobalFeedPage />} />
+        <Route path="/user/:profile" element={<ProfilePage />} />
+      </Routes>
     </>
   );
 };

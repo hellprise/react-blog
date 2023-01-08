@@ -5,6 +5,7 @@ import { FEED_PAGE_SIZE } from "../../../utils";
 
 import { GlobalFeedIn } from "./dto/global-feed.in";
 import { TagsIn } from "./dto/tags.in";
+import { ProfileIn } from "./dto/profile.in";
 
 interface GlobalFeedParams {
   page: number;
@@ -24,7 +25,10 @@ export const feedApi = createApi({
     getTags: builder.query<TagsIn, any>({
       query: () => ({ url: "/tags" }),
     }),
+    getProfile: builder.query<ProfileIn, string>({
+      query: (username) => ({ url: `/profiles/${username}` }),
+    }),
   }),
 });
 
-export const { useGetGlobalFeedQuery, useGetTagsQuery } = feedApi;
+export const { useGetGlobalFeedQuery, useGetTagsQuery, useGetProfileQuery } = feedApi;

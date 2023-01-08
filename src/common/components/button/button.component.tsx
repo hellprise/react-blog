@@ -1,7 +1,7 @@
 import { FC, DetailedHTMLProps, ButtonHTMLAttributes } from "react";
 import { Link } from "react-router-dom";
 
-type ButtonType = "article" | "form";
+type ButtonType = "article" | "form" | "transparent";
 
 interface IButtonProps
   extends DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> {
@@ -11,7 +11,7 @@ interface IButtonProps
 }
 
 export const Button: FC<IButtonProps> = ({ children, color, link, ...props }) => {
-  return (
+  return color !== "transparent" ? (
     <button {...props}>
       <Link to={link} className="group relative inline-block text-lg">
         <span className="relative z-10 block overflow-hidden rounded-lg border-2 border-blog-green px-5 py-3 font-medium leading-tight text-blog-green transition-colors duration-300 ease-out group-hover:font-semibold group-hover:text-text">
@@ -23,6 +23,12 @@ export const Button: FC<IButtonProps> = ({ children, color, link, ...props }) =>
           className="absolute bottom-0 right-0 -mb-1 -mr-1 h-12 w-full rounded-lg bg-blog-green transition-all duration-200 ease-linear group-hover:mb-0 group-hover:mr-0"
           data-rounded="rounded-lg"></span>
       </Link>
+    </button>
+  ) : (
+    <button
+      className="rounded-md border border-text bg-transparent px-5 py-3 text-text transition-all hover:bg-black hover:text-white focus:bg-transparent focus:text-blog-green focus:ring-1 focus:ring-blog-green active:ring-1 active:ring-blog-green"
+      {...props}>
+      {children}
     </button>
   );
 };
