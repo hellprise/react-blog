@@ -1,1 +1,1 @@
-export * from "./profile-banner";
+export * from './profile-banner';

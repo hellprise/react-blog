@@ -1,10 +1,10 @@
 export interface ProfileIn {
-  profile: Profile;
+    profile: Profile;
 }
 
 export interface Profile {
-  username: string;
-  bio?: any;
-  image: string;
-  following: boolean;
+    username: string;
+    bio?: any;
+    image: string;
+    following: boolean;
 }

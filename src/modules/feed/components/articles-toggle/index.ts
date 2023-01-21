@@ -1,1 +1,1 @@
-export * from "./articles-toggle.component";
+export * from './articles-toggle.component';

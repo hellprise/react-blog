@@ -1,3 +1,3 @@
 export interface TagsIn {
-  tags: string[];
+    tags: string[];
 }

@@ -1,35 +1,79 @@
-import { FC } from "react";
-import { useParams } from "react-router-dom";
-import { useGetProfileQuery } from "../../feed/api/repository";
-import { ErrorComponent } from "../../feed/components/error/error.component";
-import { LoadingComponent } from "../../feed/components/loading/loading.component";
+import clsx from 'clsx';
+import { FC } from 'react';
+import { useLocation, useParams } from 'react-router-dom';
 
-import { ProfileBanner } from "../components";
+import { Articles } from '../../feed';
+import {
+    useGetProfileFeedQuery,
+    useGetProfileQuery,
+} from '../../feed/api/repository';
+import {
+    ArticlesToggle,
+    ErrorComponent,
+    LoadingComponent,
+} from '../../feed/components';
+import { TagsCloud } from '../../feed/components/tags-cloud/tags-cloud.component';
+import { usePageParam } from '../../feed/hooks/use-page-param.hook';
+import { ProfileBanner } from '../components';
 
 interface IProfilePageProps {}
 
 export const ProfilePage: FC<IProfilePageProps> = () => {
-  const { profile } = useParams();
+    const { profile } = useParams<{ profile?: string }>();
+    const { page } = usePageParam();
+    const { pathname } = useLocation();
 
-  const { data, error, isLoading } = useGetProfileQuery(profile || "");
+    const { data, error, isLoading } = useGetProfileQuery(profile || '');
+    const {
+        data: feedData,
+        error: feedError,
+        isLoading: feedIsLoading,
+    } = useGetProfileFeedQuery({
+        author: profile!,
+        page: page,
+        isFavorite: pathname.includes(
+            `/user/${encodeURIComponent(profile!)}/favorites`,
+        ),
+    });
 
-  if (isLoading) {
-    return <LoadingComponent size="s" text="Loading" />;
-  }
+    if (isLoading || feedIsLoading) {
+        return <LoadingComponent size="s" text="Loading" />;
+    }
 
-  if (error || !data) {
-    return <ErrorComponent size="s" text="Something went wrong" />;
-  }
+    if (error || !data || feedError || !feedData) {
+        return <ErrorComponent size="s" text="Something went wrong" />;
+    }
 
-  console.log("data", data);
+    return (
+        <section>
+            <div className="bg-text/10">
+                <div className="container">
+                    <ProfileBanner data={data?.profile} />
+                </div>
+            </div>
 
-  return (
-    <section>
-      <div className="bg-text/10">
-        <div className="container">
-          <ProfileBanner data={data?.profile} />
-        </div>
-      </div>
-    </section>
-  );
+            <section className="container flex justify-between pt-6">
+                <div className="w-8/12 mx-auto">
+                    <ArticlesToggle
+                        defaultLink={`/user/${encodeURIComponent(profile!)}`}
+                        defaultTitle="My Articles"
+                        additionalItems={[
+                            {
+                                title: 'Favorited Articles',
+                                link: `/user/${encodeURIComponent(
+                                    profile!,
+                                )}/favorites`,
+                            },
+                        ]}
+                    />
+
+                    <Articles
+                        data={feedData}
+                        error={feedError}
+                        isLoading={feedIsLoading}
+                    />
+                </div>
+            </section>
+        </section>
+    );
 };

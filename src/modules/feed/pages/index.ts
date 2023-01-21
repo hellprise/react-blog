@@ -1,1 +1,1 @@
-export * from "./global-feed.page";
+export * from './global-feed.page';
