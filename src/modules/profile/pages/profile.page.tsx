@@ -1,19 +1,15 @@
-import clsx from 'clsx';
 import { FC } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 
 import { Articles } from '../../feed';
-import {
-    useGetProfileFeedQuery,
-    useGetProfileQuery,
-} from '../../feed/api/repository';
+import { useGetProfileFeedQuery } from '../../feed/api/repository';
 import {
     ArticlesToggle,
     ErrorComponent,
     LoadingComponent,
 } from '../../feed/components';
-import { TagsCloud } from '../../feed/components/tags-cloud/tags-cloud.component';
 import { usePageParam } from '../../feed/hooks/use-page-param.hook';
+import { useGetProfileQuery } from '../api/repository';
 import { ProfileBanner } from '../components';
 
 interface IProfilePageProps {}
@@ -23,7 +19,9 @@ export const ProfilePage: FC<IProfilePageProps> = () => {
     const { page } = usePageParam();
     const { pathname } = useLocation();
 
-    const { data, error, isLoading } = useGetProfileQuery(profile || '');
+    const { data, error, isLoading } = useGetProfileQuery({
+        username: profile!,
+    });
     const {
         data: feedData,
         error: feedError,
@@ -48,7 +46,7 @@ export const ProfilePage: FC<IProfilePageProps> = () => {
         <section>
             <div className="bg-text/10">
                 <div className="container">
-                    <ProfileBanner data={data?.profile} />
+                    <ProfileBanner data={data!.profile} />
                 </div>
             </div>
 

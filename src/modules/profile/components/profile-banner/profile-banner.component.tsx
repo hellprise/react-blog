@@ -1,7 +1,7 @@
 import { FC } from 'react';
 
 import { Button } from '../../../../common';
-import { ProfileIn } from '../../../feed/api/dto/profile.in';
+import { ProfileIn } from '../../api/dto/profile.in';
 
 interface IProfileBannerProps {
     data: ProfileIn['profile'];
