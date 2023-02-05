@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { Button, Tag } from '../../../../common';
 import { getDate } from '../../../../utils/getDate';
 import { Article as ArticleType } from '../../api/dto/global-feed.in';
+import { Author } from './author.component';
 
 interface IArticleProps extends ArticleType {}
 
@@ -31,40 +32,7 @@ export const Article: FC<IArticleProps> = ({
     return (
         <article className="border-t border-t-black/10 py-6">
             <div className="mb-5 flex items-end justify-between">
-                <div className="flex items-center">
-                    <img
-                        className="rounded-full"
-                        width={40}
-                        height={40}
-                        // src="https://api.realworld.io/images/demo-avatar.png"
-                        src={author.image}
-                        alt={author.username}
-                    />
-
-                    <div className="ml-2 flex flex-col">
-                        <Link
-                            to={`/user/${encodeURIComponent(author.username)}`}
-                            className="font-semibold text-blog-green"
-                        >
-                            {author.username}
-                        </Link>
-
-                        <div className="flex items-center space-x-1">
-                            <img
-                                src="/calendar.svg"
-                                width={20}
-                                height={20}
-                                alt="calendar icon"
-                            />
-
-                            <span className="text-black/30">
-                                {DateTime.fromISO(createdAt).toLocaleString(
-                                    DateTime.DATE_FULL,
-                                )}
-                            </span>
-                        </div>
-                    </div>
-                </div>
+                <Author author={author} createdAt={createdAt} />
 
                 <Button
                     className={clsx({
@@ -86,7 +54,10 @@ export const Article: FC<IArticleProps> = ({
             </div>
 
             <div className="space-y-1">
-                <Link to={`/${slug}`} className="text-2xl font-semibold">
+                <Link
+                    to={`/blog/${encodeURIComponent(slug)}`}
+                    className="text-2xl font-semibold"
+                >
                     {title}
                 </Link>
 
